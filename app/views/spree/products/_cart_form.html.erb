@@ -43,7 +43,7 @@ HEY
             </span>
             <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
           </div>
-<% end %>
+          <% end %>
           <% if @product.master.can_supply? %>
             <link itemprop="availability" href="http://schema.org/InStock" />
           <% elsif @product.variants.empty? %>

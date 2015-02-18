@@ -17,18 +17,21 @@ Spree::OrdersController.class_eval do
 
 
   def check_cyo_price
-    if Spree::Variant.find(params.try(:[], :variant_id))
-      product = Spree::Variant.find(params[:variant_id]).product
-      if product.cyo_price # consider is_master
-        variant = Spree::Variant.find(params[:variant_id])
-        # Things to consider
-          # Is the variant the master variant
-          # Are there other variants
-          # Displaying variants on frontend, will need to create method for variants to check if it should be up there
-          # Spree::Variant.create()
-          # At end of everything set params[:variant_id] to new variant
+    product = Spree::Variant.find(params.try(:[], :variant_id)).product
+    if product.cyo_price
+      variant = Spree::Variant.find(params[:variant_id])
+      custom_price = BigDecimal.new(params[:cyo_price_field])
+      if product.has_variant_with_price(custom_price)
         binding.pry
+          # Are there other variants
+        else
+          # Displaying variants on frontend, will need to create method for variants to check if it should be up there
+          new_variant = Spree::Variant.create(product: product, price: BigDecimal.new(params[:cyo_price_field]), option_values: variant.option_values, images: variant.images)
+
+          params[:variant_id] = new_variant.id
+        end
+          # At end of everything set params[:variant_id] to new variant
+        end
       end
     end
   end
-end
