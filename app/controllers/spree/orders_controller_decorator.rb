@@ -21,7 +21,12 @@ Spree::OrdersController.class_eval do
       product = Spree::Variant.find(params[:variant_id]).product
       if product.cyo_price # consider is_master
         variant = Spree::Variant.find(params[:variant_id])
-
+        # Things to consider
+          # Is the variant the master variant
+          # Are there other variants
+          # Displaying variants on frontend, will need to create method for variants to check if it should be up there
+          # Spree::Variant.create()
+          # At end of everything set params[:variant_id] to new variant
         binding.pry
       end
     end
