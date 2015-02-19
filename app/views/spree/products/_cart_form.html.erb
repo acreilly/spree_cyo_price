@@ -6,6 +6,7 @@
         <h6 class="product-section-title"><%= Spree.t(:variants) %></h6>
         <ul>
           <% @product.variants_and_option_values(current_currency).each_with_index do |variant, index| %>
+            <% next if variant.hidden %>
             <li>
               <%= radio_button_tag "variant_id", variant.id, index == 0, 'data-price' => variant.price_in(current_currency).money  %>
               <%= label_tag "variant_id_#{ variant.id }" do %>
