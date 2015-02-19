@@ -17,10 +17,10 @@ Spree::OrdersController.class_eval do
 
   def check_cyo_price
     product = Spree::Variant.find(params.try(:[], :variant_id)).product
+    custom_price = BigDecimal.new(params[:cyo_price_field])
 
-    if product.cyo_price
+    if product.cyo_price && product.price <= custom_price
       variant = Spree::Variant.find(params[:variant_id])
-      custom_price = BigDecimal.new(params[:cyo_price_field])
 
       if product.has_variant_with_price(custom_price) && product.has_variant_with_options(variant.option_values)
 
@@ -34,6 +34,7 @@ Spree::OrdersController.class_eval do
         params[:variant_id] = new_variant.id
       end
     end
+    flash[:error] = "Minimum price is #{product.display_price.to_s}."
+    redirect_back_or_default(spree.root_path)
   end
 end
-
