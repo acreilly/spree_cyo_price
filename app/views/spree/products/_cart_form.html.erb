@@ -30,8 +30,7 @@
 
     <% if @product.price_in(current_currency) and !@product.price.nil? %>
     <% if @product.cyo_price %>
-HEY
-<%= render partial: "spree/shared/cyo_price_form", locals: {product: @product} %>
+      <%= render partial: "spree/shared/cyo_price_form", locals: {product: @product} %>
     <% else %>
       <div data-hook="product_price" class="columns five <% if !@product.has_variants? %> alpha <% else %> omega <% end %>">
 
