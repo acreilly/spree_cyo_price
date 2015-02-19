@@ -33,8 +33,9 @@ Spree::OrdersController.class_eval do
 
         params[:variant_id] = new_variant.id
       end
+    else
+      flash[:error] = "Minimum price is #{product.display_price.to_s}."
+      redirect_back_or_default(spree.root_path)
     end
-    flash[:error] = "Minimum price is #{product.display_price.to_s}."
-    redirect_back_or_default(spree.root_path)
   end
 end
