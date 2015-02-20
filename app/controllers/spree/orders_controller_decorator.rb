@@ -17,7 +17,7 @@ Spree::OrdersController.class_eval do
 
   def check_cyo_price
     product = Spree::Variant.find(params.try(:[], :variant_id)).product
-    custom_price = BigDecimal.new(params[:cyo_price_field])
+    custom_price = BigDecimal.new(params[:cyo_price_field].split(" ")[1])
 
     if product.cyo_price && product.price <= custom_price
       variant = Spree::Variant.find(params[:variant_id])
@@ -29,7 +29,7 @@ Spree::OrdersController.class_eval do
         end
           false
       else
-        new_variant = Spree::Variant.create(product: product, price: BigDecimal.new(params[:cyo_price_field]), option_values: variant.option_values, images: variant.images, hidden: true)
+        new_variant = Spree::Variant.create(product: product, price: custom_price, option_values: variant.option_values, images: variant.images, hidden: true)
 
         params[:variant_id] = new_variant.id
       end
