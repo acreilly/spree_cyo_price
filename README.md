@@ -1,7 +1,7 @@
 SpreeCyoPrice
 =============
 
-Introduction goes here.
+Spree gem that allows a user to choose their own price for a product. (Good for donations) Product master price becomes minimum price.
 
 Installation
 ------------
