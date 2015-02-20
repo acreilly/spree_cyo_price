@@ -29,7 +29,7 @@ Spree::OrdersController.class_eval do
         end
           false
       else
-        new_variant = Spree::Variant.create(product: product, price: BigDecimal.new(params[:cyo_price_field]), option_values: variant.option_values, images: variant.images)
+        new_variant = Spree::Variant.create(product: product, price: BigDecimal.new(params[:cyo_price_field]), option_values: variant.option_values, images: variant.images, hidden: true)
 
         params[:variant_id] = new_variant.id
       end
