@@ -14,11 +14,14 @@ Spree::OrdersController.class_eval do
     end
   end
 
+  def get_cyo_price_decimal(price)
+    price.split(" ")[1].gsub(",", "").to_f
+  end
 
   def check_cyo_price
     unless params[:cyo_price_field].nil?
       product = Spree::Variant.find(params.try(:[], :variant_id)).product
-      custom_price = BigDecimal.new(params[:cyo_price_field].split(" ")[1])
+      custom_price = get_cyo_price_decimal(params[:cyo_price_field])
 
       if product.cyo_price && product.price <= custom_price
         variant = Spree::Variant.find(params[:variant_id])
