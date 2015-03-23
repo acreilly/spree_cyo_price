@@ -8,4 +8,5 @@
 
 $(document).ready(function($) {
  $("#cyo_price_field").priceFormat()
+ $(".cyo_price_field").priceFormat()
 });
